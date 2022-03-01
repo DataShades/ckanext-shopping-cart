@@ -1,0 +1,14 @@
+# shopping_cart-js:
+#   filter: rjsmin
+#   output: ckanext-shopping_cart/%(version)s-shopping_cart.js
+#   contents:
+#     - js/shopping_cart.js
+#   extra:
+#     preload:
+#       - base/main
+
+# shopping_cart-css:
+#   filter: cssrewrite
+#   output: ckanext-shopping_cart/%(version)s-shopping_cart.css
+#   contents:
+#     - css/shopping_cart.css
