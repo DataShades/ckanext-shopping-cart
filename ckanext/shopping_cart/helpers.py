@@ -1,4 +1,3 @@
-
 def shopping_cart_hello():
     return "Hello, shopping_cart!"
 

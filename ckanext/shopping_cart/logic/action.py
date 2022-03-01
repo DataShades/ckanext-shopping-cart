@@ -8,6 +8,7 @@ from .. import cart
 
 action, get_actions = Collector("shopping_cart").split()
 
+
 @action
 @validate(schema.add)
 def add(context, data_dict):
@@ -19,6 +20,7 @@ def add(context, data_dict):
     c.add(data_dict["item"], data_dict["details"])
     c.save(data_dict["cart"])
     return c.show()
+
 
 @action
 @validate(schema.add)
@@ -32,6 +34,7 @@ def pop(context, data_dict):
     c.save(data_dict["cart"])
     return c.show()
 
+
 @action
 @tk.side_effect_free
 @validate(schema.show)
@@ -40,5 +43,18 @@ def show(context, data_dict):
 
     c = cart.get_cart(data_dict["scope"], context)
     c.restore(data_dict["cart"])
+
+    return c.show()
+
+
+@action
+@tk.side_effect_free
+@validate(schema.clear)
+def clear(context, data_dict):
+    tk.check_access("shopping_cart_clear", context, data_dict)
+
+    c = cart.get_cart(data_dict["scope"], context)
+    c.clear()
+    c.save(data_dict["cart"])
 
     return c.show()

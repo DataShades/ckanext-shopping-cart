@@ -1,4 +1,3 @@
-
 from __future__ import annotations
 
 import abc
@@ -9,8 +8,15 @@ import ckan.lib.redis as redis
 import ckan.plugins.toolkit as tk
 from ckan.common import session
 
+CONFIG_CART_FACTORY = "ckanext.shopping_cart.factory.default"
+DEFAULT_CART_FACTORY = "redis"
+
+
 def get_cart(scope: str, context: dict[str, Any]):
-    cart = RedisCart()
+    factory = factories[
+        tk.config.get(CONFIG_CART_FACTORY, DEFAULT_CART_FACTORY)
+    ]
+    cart = factory()
 
     cart.identify(scope, context)
     return cart
@@ -79,7 +85,6 @@ class RedisCart(Cart):
 
 
 class SessionCart(Cart):
-
     def __init__(self):
         super().__init__()
         self.session = session
@@ -99,10 +104,15 @@ class SessionCart(Cart):
 
 
 class FakeSessionCart(SessionCart):
-
     def __init__(self):
         super().__init__()
 
         if "shopping_cart_session" not in tk.g:
             tk.g.shopping_cart_session = {}
         self.session = tk.g.shopping_cart_session
+
+
+factories = {
+    "redis": RedisCart,
+    "session": SessionCart,
+}

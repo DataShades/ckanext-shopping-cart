@@ -13,14 +13,20 @@ def show(not_missing, one_of, unicode_safe):
 
 
 @validator_args
+def clear():
+    return show()
+
+
+@validator_args
 def pop(not_missing):
-    return {**show(), **{
-        "item": [not_missing],
-    }}
+    return {
+        **show(),
+        **{
+            "item": [not_missing],
+        },
+    }
 
 
 @validator_args
 def add(default, convert_to_json_if_string):
-    return {**pop(), **{
-        "details": [default("{}"), convert_to_json_if_string]
-    }}
+    return {**pop(), **{"details": [default("{}"), convert_to_json_if_string]}}

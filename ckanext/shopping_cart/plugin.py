@@ -5,9 +5,7 @@ import ckan.plugins.toolkit as toolkit
 # import ckanext.shopping_cart.cli as cli
 # import ckanext.shopping_cart.helpers as helpers
 # import ckanext.shopping_cart.views as views
-from ckanext.shopping_cart.logic import (
-    action, auth
-)
+from ckanext.shopping_cart.logic import action, auth
 
 
 class ShoppingCartPlugin(plugins.SingletonPlugin):
@@ -20,14 +18,12 @@ class ShoppingCartPlugin(plugins.SingletonPlugin):
     # plugins.implements(plugins.ITemplateHelpers)
     # plugins.implements(plugins.IValidators)
 
-
     # IConfigurer
 
     def update_config(self, config_):
         toolkit.add_template_directory(config_, "templates")
         toolkit.add_public_directory(config_, "public")
         toolkit.add_resource("assets", "shopping_cart")
-
 
     # IAuthFunctions
 
