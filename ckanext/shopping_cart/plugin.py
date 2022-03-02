@@ -3,7 +3,7 @@ import ckan.plugins.toolkit as toolkit
 
 
 # import ckanext.shopping_cart.cli as cli
-# import ckanext.shopping_cart.helpers as helpers
+import ckanext.shopping_cart.helpers as helpers
 # import ckanext.shopping_cart.views as views
 from ckanext.shopping_cart.logic import action, auth
 
@@ -15,7 +15,7 @@ class ShoppingCartPlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IActions)
     # plugins.implements(plugins.IBlueprint)
     # plugins.implements(plugins.IClick)
-    # plugins.implements(plugins.ITemplateHelpers)
+    plugins.implements(plugins.ITemplateHelpers)
     # plugins.implements(plugins.IValidators)
 
     # IConfigurer
@@ -47,8 +47,8 @@ class ShoppingCartPlugin(plugins.SingletonPlugin):
 
     # ITemplateHelpers
 
-    # def get_helpers(self):
-    #     return helpers.get_helpers()
+    def get_helpers(self):
+        return helpers.get_helpers()
 
     # IValidators
 

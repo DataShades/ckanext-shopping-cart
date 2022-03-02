@@ -12,8 +12,11 @@ ckan.module("shopping-cart-order", function ($) {
       statePending: "shopping-cart-order-pending",
     },
     initialize: function () {
-      this.addStateClass();
+      this.setState(this.options.inCart);
       this.el.on("click", () => this.processItem());
+      this.sandbox.subscribe(CART_REFRESH, (cart, content) =>
+        this._onRefresh(cart, content)
+      );
     },
 
     processItem: function () {
@@ -39,12 +42,15 @@ ckan.module("shopping-cart-order", function ($) {
       );
     },
 
+    _onRefresh: function (cart, content) {
+      this.setState(
+        cart === this.options.cart &&
+          content.some((item) => item.id === this.options.item)
+      );
+    },
     _onProcessSucceed: function (data) {
-      const cart = data.result;
       this.pending(false);
-      this.options.inCart = cart.some((item) => item.id === this.options.item);
-      this.addStateClass();
-      this.sandbox.publish(CART_REFRESH, this.options.cart, cart);
+      this.sandbox.publish(CART_REFRESH, this.options.cart, data.result);
     },
 
     _onProcessFailed: function (resp) {
@@ -55,11 +61,13 @@ ckan.module("shopping-cart-order", function ($) {
     pending: function (enable) {
       this.el.toggleClass(this.options.statePending, enable);
     },
-    addStateClass: function () {
-      const isActive = this.options.inCart;
+
+    setState: function (isInside) {
+      this.options.inCart = isInside;
+
       this.el
-        .toggleClass(this.options.stateActive, isActive)
-        .toggleClass(this.options.stateInactive, !isActive);
+        .toggleClass(this.options.stateActive, isInside)
+        .toggleClass(this.options.stateInactive, !isInside);
     },
   };
 });

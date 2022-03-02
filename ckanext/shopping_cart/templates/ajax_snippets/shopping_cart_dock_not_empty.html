@@ -1,0 +1,18 @@
+<ul class="shopping-cart-dock--items">
+    {% for item in h.shopping_cart_show_cart(cart, scope) %}
+        <li class="shopping-cart-dock--item">
+            {{ item.id }}
+
+            <button
+                class="btn btn-sm btn-secondary"
+                data-module="shopping-cart-order"
+                data-module-item="{{ item.id }}"
+                data-module-in-cart="true"
+                data-module-scope="{{ scope }}"
+                data-module-cart="{{ cart }}"
+            >
+                    {{ _("Remove") }}
+            </button>
+        </li>
+    {% endfor %}
+</ul>

@@ -1,8 +1,11 @@
-def shopping_cart_hello():
-    return "Hello, shopping_cart!"
+from __future__ import annotations
+
+import ckan.plugins.toolkit as tk
+from ckanext.toolbelt.decorators import Collector
+
+helper, get_helpers = Collector("shopping_cart").split()
 
 
-def get_helpers():
-    return {
-        "shopping_cart_hello": shopping_cart_hello,
-    }
+@helper
+def show_cart(cart: str, scope: str):
+    return tk.get_action("shopping_cart_show")({}, {"cart": cart, "scope": scope})

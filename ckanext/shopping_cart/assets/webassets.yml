@@ -4,6 +4,8 @@ shopping_cart:
   contents:
     - js/shopping-cart-base.js
     - js/shopping-cart-order.js
+    - js/shopping-cart-clear.js
+    - js/shopping-cart-dock.js
   extra:
     preload:
       - base/main

@@ -2,3 +2,7 @@
     border: 1px solid black;
     background: yellow;
 }
+
+.shopping-cart-dock .shopping-cart-dock--heading .counter:after {
+    content: attr(data-count);
+}
