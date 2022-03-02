@@ -10,7 +10,7 @@ class TestAdd:
         cart = call_action(
             "shopping_cart_add", scope=scope, item="first", cart="test"
         )
-        assert cart == {"first": {}}
+        assert cart == [{"id": "first", "details": {}}]
 
         cart = call_action(
             "shopping_cart_add",
@@ -19,7 +19,7 @@ class TestAdd:
             cart="test",
             details={1: 2},
         )
-        assert cart == {"first": {}, "second": {1: 2}}
+        assert cart == [{"id": "first", "details": {}}, {"id": "second", "details": {1: 2}}]
 
 
 @pytest.mark.usefixtures("clean_cache", "with_plugins", "with_request_context")
@@ -36,17 +36,17 @@ class TestPop:
             cart="test",
             details={1: 2},
         )
-        assert cart == {"first": {}, "second": {1: 2}}
+        assert cart == [{"id": "first", "details": {}}, {"id": "second", "details": {1: 2}}]
 
         cart = call_action(
             "shopping_cart_pop", scope=scope, item="first", cart="test"
         )
-        assert cart == {"second": {1: 2}}
+        assert cart == [{"id": "second", "details": {1: 2}}]
 
         cart = call_action(
             "shopping_cart_pop", scope=scope, item="second", cart="test"
         )
-        assert cart == {}
+        assert cart == []
 
 
 @pytest.mark.usefixtures("clean_cache", "with_plugins", "with_request_context")
@@ -100,6 +100,6 @@ class TestClear:
             cart="test",
             details={1: 2},
         )
-        assert {} == call_action(
+        assert [] == call_action(
             "shopping_cart_clear", scope=scope, cart="test"
         )

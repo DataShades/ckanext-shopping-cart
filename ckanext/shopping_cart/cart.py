@@ -2,7 +2,8 @@ from __future__ import annotations
 
 import abc
 import pickle
-from typing import Any, Optional
+import dataclasses
+from typing import Any, Iterable, Optional, OrderedDict
 
 import ckan.lib.redis as redis
 import ckan.plugins.toolkit as tk
@@ -21,9 +22,15 @@ def get_cart(scope: str, context: dict[str, Any]):
     cart.identify(scope, context)
     return cart
 
+@dataclasses.dataclass
+class Item:
+    id: str
+    details: dict[str, Any] = dataclasses.field(default_factory=dict)
+
 
 class Cart(abc.ABC):
     id: Optional[str] = None
+    content: Any
 
     def __init__(self):
         self.clear()
@@ -45,7 +52,7 @@ class Cart(abc.ABC):
         return self.content.pop(item, None)
 
     def show(self):
-        return dict(self.content)
+        return [{"id": id, "details": details} for id, details in self.content.items()]
 
     def __bool__(self):
         return bool(self.content)
