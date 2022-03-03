@@ -25,7 +25,6 @@ ckan.module("shopping-cart-dock", function ($) {
     _onRefresh: function (cart, content) {
       this.$(this.options.counter).attr("data-count", content.length);
       const payload = this._payload();
-      payload.content = content;
 
       if (content.length) {
         this._render(this.options.not_empty, "body", payload);
