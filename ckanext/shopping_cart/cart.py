@@ -22,6 +22,7 @@ def get_cart(scope: str, context: dict[str, Any]):
     cart.identify(scope, context)
     return cart
 
+
 @dataclasses.dataclass
 class Item:
     id: str
@@ -52,7 +53,10 @@ class Cart(abc.ABC):
         return self.content.pop(item, None)
 
     def show(self):
-        return [{"id": id, "details": details} for id, details in self.content.items()]
+        return [
+            {"id": id, "details": details}
+            for id, details in self.content.items()
+        ]
 
     def __bool__(self):
         return bool(self.content)

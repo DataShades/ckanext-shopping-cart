@@ -19,7 +19,10 @@ class TestAdd:
             cart="test",
             details={1: 2},
         )
-        assert cart == [{"id": "first", "details": {}}, {"id": "second", "details": {1: 2}}]
+        assert cart == [
+            {"id": "first", "details": {}},
+            {"id": "second", "details": {1: 2}},
+        ]
 
 
 @pytest.mark.usefixtures("clean_cache", "with_plugins", "with_request_context")
@@ -36,7 +39,10 @@ class TestPop:
             cart="test",
             details={1: 2},
         )
-        assert cart == [{"id": "first", "details": {}}, {"id": "second", "details": {1: 2}}]
+        assert cart == [
+            {"id": "first", "details": {}},
+            {"id": "second", "details": {1: 2}},
+        ]
 
         cart = call_action(
             "shopping_cart_pop", scope=scope, item="first", cart="test"

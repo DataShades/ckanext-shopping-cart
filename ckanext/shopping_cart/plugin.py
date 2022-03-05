@@ -4,6 +4,7 @@ import ckan.plugins.toolkit as toolkit
 
 # import ckanext.shopping_cart.cli as cli
 import ckanext.shopping_cart.helpers as helpers
+
 # import ckanext.shopping_cart.views as views
 from ckanext.shopping_cart.logic import action, auth
 
